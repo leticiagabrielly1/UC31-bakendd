@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Campeonato de Games</title>
+</head>
+<body>
+
+<h1>Inscrição para Campeonato de Games</h1>
+
+<form method="POST">
+
+<label>Nickname:</label><br>
+<input type="text" name="nickname"><br><br>
+
+<label>Jogo:</label><br>
+<select name="jogo">
+<option value="">Selecione um jogo</option>
+<option value="Free Fire">Free Fire</option>
+<option value="Valorant">Valorant</option>
+<option value="Minecraft">Minecraft</option>
+</select><br><br>
+
+<label>E-mail:</label><br>
+<input type="email" name="email"><br><br>
+
+<button type="submit">Inscrever-se</button>
+
+</form>
+
+<p>{{ mensagem }}</p>
+
+</body>
+</html>
