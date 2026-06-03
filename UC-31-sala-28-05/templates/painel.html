@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Painel</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            padding:40px;
+        }
+
+        .sucesso{
+            background:#b6ffb3;
+            color:darkgreen;
+            padding:15px;
+            border-radius:8px;
+            margin-bottom:20px;
+            width:300px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+        {% if mensagens %}
+
+            {% for categoria, mensagem in mensagens %}
+
+                {% if categoria == 'sucesso' %}
+
+                    <div class="sucesso">
+                        {{ mensagem }}
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+        {% endif %}
+    {% endwith %}
+
+    <h1>Bem-vindo ao painel!</h1>
+
+</body>
+
+</html>

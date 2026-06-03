@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #e5a346, #865e02);
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .container{
+            background:white;
+            width:380px;
+            padding:40px;
+            border-radius:20px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h2{
+            text-align:center;
+            margin-bottom:25px;
+            color:#333;
+            font-size:32px;
+        }
+
+        .erro{
+            background:#ffe5e5;
+            color:#b30000;
+            padding:12px;
+            border-left:5px solid red;
+            border-radius:10px;
+            margin-bottom:20px;
+            font-size:14px;
+        }
+
+        .grupo-input{
+            margin-bottom:18px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:6px;
+            color:#444;
+            font-weight:bold;
+        }
+
+        input{
+            width:100%;
+            padding:14px;
+            border:1px solid #ccc;
+            border-radius:10px;
+            font-size:15px;
+            transition:0.3s;
+        }
+
+        input:focus{
+            border-color:#f8670d;
+            outline:none;
+            box-shadow:0 0 8px rgba(237, 153, 58, 0.3);
+        }
+
+        button{
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:10px;
+            background:#7c3aed;
+            color:white;
+            font-size:16px;
+            font-weight:bold;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        button:hover{
+            background:#5b21b6;
+            transform:scale(1.02);
+        }
+
+        .link{
+            text-align:center;
+            margin-top:18px;
+        }
+
+        .link a{
+            text-decoration:none;
+            color:#7c3aed;
+            font-weight:bold;
+        }
+
+        .link a:hover{
+            text-decoration:underline;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Login</h2>
+
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% if mensagens %}
+
+                {% for categoria, mensagem in mensagens %}
+
+                    {% if categoria == 'erro' %}
+
+                        <div class="erro">
+                            {{ mensagem }}
+                        </div>
+
+                    {% endif %}
+
+                {% endfor %}
+
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+
+            <div class="grupo-input">
+                <label>E-mail</label>
+                <input type="email" name="email" placeholder="Digite seu e-mail">
+            </div>
+
+            <div class="grupo-input">
+                <label>Senha</label>
+                <input type="password" name="senha" placeholder="Digite sua senha">
+            </div>
+
+            <button type="submit">
+                Entrar
+            </button>
+
+        </form>
+
+        <div class="link">
+            <a href="#">Criar conta</a>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

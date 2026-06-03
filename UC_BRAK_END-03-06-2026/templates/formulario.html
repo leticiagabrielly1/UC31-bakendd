@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Alunos - DevTech</title>
+    <style>
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg,#4f46e5,#7c3aed,#06b6d4);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 15px;
+}
+
+.container{
+    width: 100%;
+    max-width: 650px;
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 24px;
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.15),
+        0 10px 20px rgba(0,0,0,0.08);
+    animation: surgir .5s ease;
+}
+
+@keyframes surgir{
+    from{
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h2{
+    text-align: center;
+    color: #1e293b;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+h2::after{
+    content: "";
+    display: block;
+    width: 70px;
+    height: 4px;
+    background: linear-gradient(90deg,#4f46e5,#06b6d4);
+    margin: 10px auto 0;
+    border-radius: 20px;
+}
+
+.form-group{
+    margin-bottom: 18px;
+}
+
+label{
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 600;
+    color: #475569;
+}
+
+input,
+select{
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 15px;
+    transition: .3s;
+    background: #f8fafc;
+}
+
+input:focus,
+select:focus{
+    outline: none;
+    border-color: #4f46e5;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(79,70,229,.15);
+}
+
+input:hover,
+select:hover{
+    border-color: #94a3b8;
+}
+
+button{
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg,#4f46e5,#06b6d4);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .3s;
+    margin-top: 10px;
+}
+
+button:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(79,70,229,.25);
+}
+
+button:active{
+    transform: scale(.98);
+}
+
+.error{
+    background: #fef2f2;
+    border-left: 5px solid #ef4444;
+    color: #991b1b;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.success-box{
+    background: #ecfdf5;
+    border-left: 5px solid #10b981;
+    color: #065f46;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.success-box h3{
+    margin-bottom: 10px;
+}
+
+.success-box a{
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 15px;
+    background: #10b981;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: .3s;
+}
+
+.success-box a:hover{
+    background: #059669;
+}
+
+ul{
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+::placeholder{
+    color: #94a3b8;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 768px){
+
+    body{
+        padding: 20px 10px;
+    }
+
+    .container{
+        padding: 25px;
+    }
+
+    h2{
+        font-size: 1.7rem;
+    }
+
+    div[style*="display: flex"]{
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+}
+
+@media (max-width: 480px){
+
+    .container{
+        padding: 20px;
+        border-radius: 18px;
+    }
+
+    h2{
+        font-size: 1.5rem;
+    }
+
+    input,
+    select,
+    button{
+        padding: 13px;
+        font-size: 14px;
+    }
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastro de Aluno</h2>
+
+        {% if erros %}
+            <div class="error">
+                <strong>Erros encontrados:</strong>
+                <ul>{% for erro in erros %} <li>{{ erro }}</li> {% endfor %}</ul>
+            </div>
+        {% endif %}
+
+        {% if sucesso %}
+            <div class="success-box">
+                <h3>Cadastro realizado com sucesso!</h3>
+                {% for chave, valor in sucesso.items() %}
+                    <p><strong>{{ chave }}:</strong> {{ valor }}</p>
+                {% endfor %}
+                <a href="/">Novo Cadastro</a>
+            </div>
+        {% else %}
+            <form action="/cadastro" method="POST">
+                <div class="form-group"><label>Nome Completo</label><input type="text" name="nome" value="{{ dados.nome if dados else '' }}"></div>
+                <div class="form-group"><label>E-mail</label><input type="text" name="email" value="{{ dados.email if dados else '' }}"></div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group"><label>Telefone</label><input type="text" name="telefone" placeholder="(00) 00000-0000" value="{{ dados.telefone if dados else '' }}"></div>
+                    <div class="form-group"><label>CPF</label><input type="text" name="cpf" placeholder="000.000.000-00" value="{{ dados.cpf if dados else '' }}"></div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <div class="form-group" style="flex: 2;"><label>Cidade</label><input type="text" name="cidade" value="{{ dados.cidade if dados else '' }}"></div>
+                    <div class="form-group" style="flex: 1;"><label>Estado (UF)</label><input type="text" name="estado" maxlength="2" value="{{ dados.estado if dados else '' }}"></div>
+                </div>
+                <div class="form-group">
+                    <label>Curso</label>
+                    <select name="curso">
+                        <option value="">Selecione...</option>
+                        <option value="Desenvolvimento de Sistemas">Desenvolvimento de Sistemas</option>
+                        <option value="Redes de Computadores">Redes de Computadores</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Idade</label><input type="number" name="idade" value="{{ dados.idade if dados else '' }}"></div>
+                <div class="form-group"><label>Senha</label><input type="password" name="senha"></div>
+                <button type="submit">Finalizar Cadastro</button>
+            </form>
+        {% endif %}
+    </div>
+</body>
+</html>
