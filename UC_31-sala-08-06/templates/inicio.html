@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Temas com Cookies</title>
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: 0.4s;
+}
+
+.card{
+    width: 400px;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+
+    transition: 0.4s;
+}
+
+h1{
+    margin-bottom: 15px;
+}
+
+p{
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+h2{
+    margin-bottom: 25px;
+}
+
+.botoes{
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+a{
+    text-decoration: none;
+    padding: 12px 18px;
+    border-radius: 10px;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+a:hover{
+    transform: scale(1.05);
+}
+
+.tema-claro{
+    background: linear-gradient(
+        135deg,
+        #74ebd5,
+        #ACB6E5
+    );
+
+    color: #222;
+}
+
+.tema-claro .card{
+    background-color: white;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.tema-claro a{
+    background-color: #3498db;
+    color: white;
+}
+
+
+.tema-escuro{
+    background: linear-gradient(
+        135deg,
+        #141E30,
+        #243B55
+    );
+
+    color: white;
+}
+
+.tema-escuro .card{
+    background-color: #1f2937;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.tema-escuro a{
+    background-color: #111827;
+    color: white;
+}
+    </style>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="tema-{{ tema }}">
+
+    <div class="card">
+
+        <h1>Cookies no Flask</h1>
+
+        <p>
+            O tema escolhido ficará salvo no navegador.
+        </p>
+
+        <h2>Tema Atual: {{ tema }}</h2>
+
+        <div class="botoes">
+
+            <a href="{{ url_for('trocar_tema', escolha='claro') }}">
+                Tema Claro
+            </a>
+
+            <a href="{{ url_for('trocar_tema', escolha='escuro') }}">
+                Tema Escuro
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
+
