@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Site Personalizado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.tema-claro {
+    --bg:           #F0EDE8;
+    --bg-card:      #FAFAF7;
+    --bg-input:     #FFFFFF;
+    --border:       #DDD8D0;
+    --texto:        #1A1714;
+    --texto-sub:    #6B6560;
+    --destaque:     #2E5CFF;
+    --destaque-hover: #1A45E0;
+    --destaque-txt: #FFFFFF;
+    --saudacao-bg:  #EBF0FF;
+    --saudacao-borda: #B3C4FF;
+    --pref-bg:      #F5F3EF;
+    --sombra:       0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+}
+
+
+.tema-escuro {
+    --bg:           #111318;
+    --bg-card:      #1C1F27;
+    --bg-input:     #252830;
+    --border:       #2E3140;
+    --texto:        #EAE9E6;
+    --texto-sub:    #8A8D99;
+    --destaque:     #6B8AFF;
+    --destaque-hover: #8BA0FF;
+    --destaque-txt: #0A0D1A;
+    --saudacao-bg:  #1A1F35;
+    --saudacao-borda: #2E3A60;
+    --pref-bg:      #161820;
+    --sombra:       0 1px 3px rgba(0,0,0,.3), 0 4px 20px rgba(0,0,0,.25);
+}
+
+
+body {
+    background-color: var(--bg);
+    color: var(--texto);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    transition: background-color .3s ease, color .3s ease;
+}
+
+.container {
+    max-width: 580px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+
+.cabecalho-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -.5px;
+    color: var(--destaque);
+}
+
+.botao-tema {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .45rem .9rem;
+    border-radius: 99px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--texto);
+    font-size: .82rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .2s, border-color .2s, transform .1s;
+}
+
+.botao-tema:hover {
+    background: var(--pref-bg);
+    border-color: var(--destaque);
+    transform: translateY(-1px);
+}
+
+
+.card-saudacao {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: 14px;
+    background: var(--saudacao-bg);
+    border: 1px solid var(--saudacao-borda);
+    box-shadow: var(--sombra);
+    transition: background .3s, border-color .3s;
+}
+
+.card-neutro {
+    background: var(--bg-card);
+    border-color: var(--border);
+}
+
+.icone-saudacao {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.saudacao-label {
+    font-size: .8rem;
+    color: var(--texto-sub);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: .15rem;
+}
+
+.saudacao-nome {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--texto);
+    letter-spacing: -.3px;
+}
+
+.secao-formulario,
+.secao-prefs {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.4rem 1.5rem;
+    box-shadow: var(--sombra);
+    transition: background .3s, border-color .3s;
+}
+
+.secao-titulo {
+    font-size: .78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--texto-sub);
+    margin-bottom: 1rem;
+}
+
+
+.campo-label {
+    display: block;
+    font-size: .88rem;
+    font-weight: 500;
+    margin-bottom: .5rem;
+    color: var(--texto);
+}
+
+.campo-linha {
+    display: flex;
+    gap: .5rem;
+}
+
+.campo-input {
+    flex: 1;
+    padding: .65rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg-input);
+    color: var(--texto);
+    font-size: .95rem;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.campo-input::placeholder {
+    color: var(--texto-sub);
+}
+
+.campo-input:focus {
+    border-color: var(--destaque);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--destaque) 18%, transparent);
+}
+
+.botao-salvar {
+    padding: .65rem 1.3rem;
+    border-radius: 8px;
+    border: none;
+    background: var(--destaque);
+    color: var(--destaque-txt);
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .2s, transform .1s;
+}
+
+.botao-salvar:hover {
+    background: var(--destaque-hover);
+    transform: translateY(-1px);
+}
+
+.botao-salvar:active {
+    transform: translateY(0);
+}
+
+
+.grade-prefs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .75rem;
+}
+
+.pref-item {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    padding: 1rem;
+    background: var(--pref-bg);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+}
+
+.pref-icone {
+    font-size: 1.3rem;
+}
+
+.pref-label {
+    font-size: .75rem;
+    color: var(--texto-sub);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.pref-valor {
+    font-size: .95rem;
+    font-weight: 600;
+    color: var(--texto);
+}
+
+
+.rodape {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: .5rem;
+    font-size: .8rem;
+    color: var(--texto-sub);
+}
+
+.link-limpar {
+    color: var(--texto-sub);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--border);
+    transition: color .2s;
+}
+
+.link-limpar:hover {
+    color: #E05252;
+    border-color: #E05252;
+}
+
+
+@media (max-width: 420px) {
+    .container {
+        padding: 1.25rem 1rem 3rem;
+    }
+
+    .grade-prefs {
+        grid-template-columns: 1fr;
+    }
+
+    .campo-linha {
+        flex-direction: column;
+    }
+
+    .botao-salvar {
+        width: 100%;
+    }
+
+    .rodape {
+        flex-direction: column;
+        gap: .5rem;
+        text-align: center;
+    }
+}
+    </style>
+</head>
+<body class="tema-{{ tema }}">
+
+    <div class="container">
+
+        
+        <header class="cabecalho">
+            <div class="cabecalho-topo">
+                <h1 class="logo">✦ Meu Espaço</h1>
+                <a href="{{ url_for('alterar_tema') }}" class="botao-tema" title="Alternar tema">
+                    {% if tema == 'claro' %}
+                        🌙 Tema Escuro
+                    {% else %}
+                        ☀️ Tema Claro
+                    {% endif %}
+                </a>
+            </div>
+        </header>
+
+        
+        <section class="saudacao">
+            {% if nome %}
+                <div class="card-saudacao">
+                    <span class="icone-saudacao">👋</span>
+                    <div>
+                        <p class="saudacao-label">Bem-vindo(a) de volta,</p>
+                        <h2 class="saudacao-nome">{{ nome }}!</h2>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card-saudacao card-neutro">
+                    <span class="icone-saudacao">🙂</span>
+                    <div>
+                        <p class="saudacao-label">Olá, visitante!</p>
+                        <h2 class="saudacao-nome">Como posso te chamar?</h2>
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+
+        
+        <section class="secao-formulario">
+            <h3 class="secao-titulo">
+                {% if nome %}Atualizar nome{% else %}Cadastrar nome{% endif %}
+            </h3>
+            <form action="{{ url_for('salvar_nome') }}" method="POST" class="formulario">
+                <div class="campo-grupo">
+                    <label for="nome" class="campo-label">Seu nome</label>
+                    <div class="campo-linha">
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            class="campo-input"
+                            placeholder="Digite seu nome..."
+                            value="{{ nome }}"
+                            required
+                            maxlength="60"
+                        >
+                        <button type="submit" class="botao-salvar">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        
+        <section class="secao-prefs">
+            <h3 class="secao-titulo">Suas preferências</h3>
+            <div class="grade-prefs">
+                <div class="pref-item">
+                    <span class="pref-icone">👤</span>
+                    <span class="pref-label">Nome salvo</span>
+                    <span class="pref-valor">{{ nome if nome else '—' }}</span>
+                </div>
+                <div class="pref-item">
+                    <span class="pref-icone">{% if tema == 'claro' %}☀️{% else %}🌙{% endif %}</span>
+                    <span class="pref-label">Tema ativo</span>
+                    <span class="pref-valor">{{ 'Claro' if tema == 'claro' else 'Escuro' }}</span>
+                </div>
+            </div>
+        </section>
+
+        
+        <footer class="rodape">
+            <p>Preferências salvas via cookies no seu navegador.</p>
+            <a href="{{ url_for('limpar') }}" class="link-limpar">Limpar dados</a>
+        </footer>
+
+    </div>
+
+</body>
+</html>
