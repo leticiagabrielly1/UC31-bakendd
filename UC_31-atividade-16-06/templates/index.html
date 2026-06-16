@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}SecureApp — Início{% endblock %}
+
+{% block content %}
+<div class="logo">
+    <div class="logo-icon">🔒</div>
+    <span class="logo-name">secure_app / v1.0</span>
+</div>
+
+<h1>Bem-vindo ao SecureApp</h1>
+<p class="subtitle">Sistema de autenticação com sessões Flask. Acesse com suas credenciais para entrar na área restrita.</p>
+
+<a href="/login" class="btn">Entrar na conta</a>
+
+<hr class="divider">
+
+<div class="foot" style="margin-top:0; text-align:left; font-size:0.8rem; color:var(--muted);">
+    <span>Construído com Flask · Sessions · SECRET_KEY</span><br><br>
+    <a href="/rotalogin">🤖 /rotalogin</a> — rota de identificação de IA
+</div>
+{% endblock %}

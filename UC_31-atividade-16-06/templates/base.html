@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SecureApp{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:        #0d1117;
+            --surface:   #161b22;
+            --border:    #21262d;
+            --cyan:      #58d6c8;
+            --cyan-dim:  #1e3a38;
+            --text:      #e6edf3;
+            --muted:     #7d8590;
+            --error-bg:  #1a0d0d;
+            --error:     #f85149;
+            --success-bg:#0d1f17;
+            --success:   #3fb950;
+            --radius:    10px;
+            --mono:      'IBM Plex Mono', monospace;
+            --sans:      'Inter', sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+        }
+
+        
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.35;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .card {
+            position: relative; z-index: 1;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 40px 44px;
+            width: 100%; max-width: 440px;
+            animation: fadeUp .35s ease both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity:0; transform: translateY(14px); }
+            to   { opacity:1; transform: translateY(0);    }
+        }
+
+       
+        .card::before {
+            content:'';
+            position: absolute; top:0; left:0; right:0; height:2px;
+            border-radius: var(--radius) var(--radius) 0 0;
+            background: linear-gradient(90deg, var(--cyan), transparent 70%);
+        }
+
+        
+        .logo {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 32px;
+        }
+        .logo-icon {
+            width: 32px; height: 32px;
+            background: var(--cyan-dim);
+            border: 1px solid var(--cyan);
+            border-radius: 8px;
+            display: grid; place-items: center;
+            font-size: 15px;
+        }
+        .logo-name {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            color: var(--cyan);
+            letter-spacing: .04em;
+        }
+
+        
+        h1 {
+            font-size: 1.5rem; font-weight: 600;
+            margin-bottom: 6px; line-height: 1.25;
+        }
+        .subtitle {
+            color: var(--muted); font-size: 0.875rem;
+            margin-bottom: 28px; line-height: 1.55;
+        }
+
+        
+        .form-group { margin-bottom: 20px; }
+        label {
+            display: block; margin-bottom: 6px;
+            font-size: 0.8rem; font-weight: 500;
+            color: var(--muted); letter-spacing: .05em; text-transform: uppercase;
+        }
+
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        input::placeholder { color: var(--muted); opacity: .7; }
+        input:focus {
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 3px rgba(88,214,200,.1);
+        }
+
+        
+        .btn {
+            display: block; width: 100%;
+            padding: 11px 20px;
+            background: var(--cyan);
+            color: #0d1117;
+            border: none; border-radius: 8px;
+            font-family: var(--sans);
+            font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; text-align: center;
+            text-decoration: none;
+            transition: opacity .15s, transform .1s;
+        }
+        .btn:hover  { opacity: .88; }
+        .btn:active { transform: scale(.98); }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+        .btn-ghost:hover { border-color: var(--muted); }
+
+        .btn-danger {
+            background: transparent;
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+        .btn-danger:hover { background: var(--error-bg); }
+
+        
+        .alert {
+            display: flex; align-items: flex-start; gap: 10px;
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin-bottom: 22px;
+            font-size: 0.85rem; line-height: 1.5;
+        }
+        .alert-icon { flex-shrink: 0; font-size: 1rem; margin-top: 1px; }
+        .alert-error   { background: var(--error-bg);   border: 1px solid rgba(248,81,73,.3);  color: var(--error);   }
+        .alert-success { background: var(--success-bg); border: 1px solid rgba(63,185,80,.3);  color: var(--success); }
+        .alert-info    { background: var(--cyan-dim);   border: 1px solid rgba(88,214,200,.25);color: var(--cyan);    }
+
+        
+        .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+
+        
+        .foot {
+            text-align: center; margin-top: 22px;
+            font-size: 0.82rem; color: var(--muted);
+        }
+        .foot a { color: var(--cyan); text-decoration: none; }
+        .foot a:hover { text-decoration: underline; }
+
+        
+        .avatar {
+            width: 52px; height: 52px;
+            background: var(--cyan-dim);
+            border: 1.5px solid var(--cyan);
+            border-radius: 50%;
+            display: grid; place-items: center;
+            font-family: var(--mono); font-size: 1.25rem; font-weight: 600;
+            color: var(--cyan);
+            margin-bottom: 18px;
+        }
+
+        
+        code {
+            font-family: var(--mono);
+            background: var(--bg);
+            padding: 2px 7px;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+            font-size: 0.83em;
+            color: var(--cyan);
+        }
+
+        
+        .session-pill {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: var(--success-bg);
+            border: 1px solid rgba(63,185,80,.3);
+            color: var(--success);
+            font-size: 0.78rem; font-family: var(--mono);
+            padding: 4px 10px; border-radius: 99px;
+            margin-bottom: 20px;
+        }
+        .session-pill::before {
+            content:''; width:7px; height:7px;
+            background: var(--success); border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%,100%{ opacity:1; } 50%{ opacity:.3; }
+        }
+    </style>
+    {% block extra_style %}{% endblock %}
+</head>
+<body>
+<div class="card">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+            <div class="alert alert-info">
+                <span class="alert-icon">ℹ</span><span>{{ msg }}</span>
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</div>
+</body>
+</html>

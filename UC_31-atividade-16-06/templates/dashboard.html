@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}SecureApp — Dashboard{% endblock %}
+
+{% block content %}
+<div class="logo">
+    <div class="logo-icon">🛡</div>
+    <span class="logo-name">área restrita</span>
+</div>
+
+<div class="avatar">{{ usuario[0].upper() }}</div>
+
+<div class="session-pill">sessão ativa</div>
+
+<h1>Olá, {{ usuario }}.</h1>
+<p class="subtitle">Você está autenticado. Sua sessão está protegida no servidor Flask — nenhum dado sensível é exposto ao cliente.</p>
+
+<div class="alert alert-success" style="margin-bottom:28px;">
+    <span class="alert-icon">✓</span>
+    <span>Login realizado com sucesso via <code>session['usuario']</code>.</span>
+</div>
+
+<a href="/logout" class="btn btn-danger">Encerrar sessão</a>
+
+<div class="foot"><a href="/">← Voltar ao início</a></div>
+{% endblock %}

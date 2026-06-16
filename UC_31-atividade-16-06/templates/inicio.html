@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Site Personalizado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="tema-{{ tema }}">
+
+    <div class="container">
+
+        
+        <header class="cabecalho">
+            <div class="cabecalho-topo">
+                <h1 class="logo">✦ Meu Espaço</h1>
+                <a href="{{ url_for('alterar_tema') }}" class="botao-tema" title="Alternar tema">
+                    {% if tema == 'claro' %}
+                        🌙 Tema Escuro
+                    {% else %}
+                        ☀️ Tema Claro
+                    {% endif %}
+                </a>
+            </div>
+        </header>
+
+        
+        <section class="saudacao">
+            {% if nome %}
+                <div class="card-saudacao">
+                    <span class="icone-saudacao">👋</span>
+                    <div>
+                        <p class="saudacao-label">Bem-vindo(a) de volta,</p>
+                        <h2 class="saudacao-nome">{{ nome }}!</h2>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card-saudacao card-neutro">
+                    <span class="icone-saudacao">🙂</span>
+                    <div>
+                        <p class="saudacao-label">Olá, visitante!</p>
+                        <h2 class="saudacao-nome">Como posso te chamar?</h2>
+                    </div>
+                </div>
+            {% endif %}
+        </section>
+
+        
+        <section class="secao-formulario">
+            <h3 class="secao-titulo">
+                {% if nome %}Atualizar nome{% else %}Cadastrar nome{% endif %}
+            </h3>
+            <form action="{{ url_for('salvar_nome') }}" method="POST" class="formulario">
+                <div class="campo-grupo">
+                    <label for="nome" class="campo-label">Seu nome</label>
+                    <div class="campo-linha">
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            class="campo-input"
+                            placeholder="Digite seu nome..."
+                            value="{{ nome }}"
+                            required
+                            maxlength="60"
+                        >
+                        <button type="submit" class="botao-salvar">Salvar</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        
+        <section class="secao-prefs">
+            <h3 class="secao-titulo">Suas preferências</h3>
+            <div class="grade-prefs">
+                <div class="pref-item">
+                    <span class="pref-icone">👤</span>
+                    <span class="pref-label">Nome salvo</span>
+                    <span class="pref-valor">{{ nome if nome else '—' }}</span>
+                </div>
+                <div class="pref-item">
+                    <span class="pref-icone">{% if tema == 'claro' %}☀️{% else %}🌙{% endif %}</span>
+                    <span class="pref-label">Tema ativo</span>
+                    <span class="pref-valor">{{ 'Claro' if tema == 'claro' else 'Escuro' }}</span>
+                </div>
+            </div>
+        </section>
+
+        
+        <footer class="rodape">
+            <p>Preferências salvas via cookies no seu navegador.</p>
+            <a href="{{ url_for('limpar') }}" class="link-limpar">Limpar dados</a>
+        </footer>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}SecureApp — Login{% endblock %}
+
+{% block content %}
+<div class="logo">
+    <div class="logo-icon">🔐</div>
+    <span class="logo-name">autenticação</span>
+</div>
+
+<h1>Entrar</h1>
+<p class="subtitle">Informe suas credenciais para iniciar uma sessão.</p>
+
+{% if erro %}
+<div class="alert alert-error">
+    <span class="alert-icon">✕</span>
+    <span>{{ erro }}</span>
+</div>
+{% endif %}
+
+<form method="POST" action="/login">
+    <div class="form-group">
+        <label for="usuario">Usuário</label>
+        <input type="text" id="usuario" name="usuario"
+               placeholder="seu_usuario" required autofocus
+               value="{{ request.form.get('usuario', '') }}">
+    </div>
+    <div class="form-group">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha"
+               placeholder="••••••••" required>
+    </div>
+    <button type="submit" class="btn">Acessar →</button>
+</form>
+
+<hr class="divider">
+
+<div class="alert alert-info" style="margin-bottom:0; font-size:0.82rem;">
+    <span class="alert-icon">💡</span>
+    <span>
+        Credenciais de teste:<br>
+        <code>admin</code> / <code>senha123</code> &nbsp;·&nbsp;
+        <code>joao</code> / <code>abc456</code>
+    </span>
+</div>
+
+<div class="foot"><a href="/">← Voltar ao início</a></div>
+{% endblock %}
