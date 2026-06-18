@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="card">
+
+    <h1>🏆 Resultado Final</h1>
+
+    <h2>{{ nome }}</h2>
+
+    <div class="placar">
+        {{ pontos }}/5
+    </div>
+
+    {% if pontos == 5 %}
+        <p>Você é um especialista em Copas do Mundo!</p>
+    {% elif pontos >= 3 %}
+        <p>Excelente desempenho!</p>
+    {% else %}
+        <p>Tente novamente para melhorar sua pontuação.</p>
+    {% endif %}
+
+    <a href="/" class="btn">
+        Jogar Novamente
+    </a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="card">
+
+    <h2>Jogador: {{ nome }}</h2>
+
+    <span class="contador">
+        Pergunta {{ numero }} de 5
+    </span>
+
+    <h1>
+        {{ pergunta["pergunta"] }}
+    </h1>
+
+    <form action="/responder" method="POST">
+
+        {% for opcao in pergunta["opcoes"] %}
+
+        <label class="opcao">
+            <input
+                type="radio"
+                name="resposta"
+                value="{{ opcao }}"
+                required
+            >
+            {{ opcao }}
+        </label>
+
+        {% endfor %}
+
+        <button type="submit">
+            Responder
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
