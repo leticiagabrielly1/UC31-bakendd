@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: white;
+            border-radius: 12px;
+            margin: 10px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: .3s;
+        }
+        .ranking-item:hover { transform: scale(1.02); }
+        .posicao { font-weight: 700; font-size: 20px; color: #002776; width: 40px; }
+        .nome { flex: 1; text-align: left; font-weight: 600; color: #333; }
+        .pontos { font-weight: 700; color: #009739; background: #eefaf1; padding: 5px 15px; border-radius: 20px; }
+        .medalha { font-size: 28px; margin-right: 10px; }
+        .vazio { color: #999; padding: 30px 0; }
+        .btn-voltar { display: inline-block; margin-top: 25px; padding: 12px 30px; background: #002776; color: white; border-radius: 12px; text-decoration: none; font-weight: 600; transition: .3s; }
+        .btn-voltar:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,39,118,.3); }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>🏅 Ranking dos Campeões</h1>
+    <p>Os melhores jogadores conforme a pontuação acumulada.</p>
+
+    {% if ranking %}
+        {% for jogador in ranking %}
+            <div class="ranking-item">
+                <span class="posicao">
+                    {% if loop.index == 1 %}🥇
+                    {% elif loop.index == 2 %}🥈
+                    {% elif loop.index == 3 %}🥉
+                    {% else %}#{{ loop.index }}{% endif %}
+                </span>
+                <span class="nome">{{ jogador.nome }}</span>
+                <span class="pontos">{{ jogador.pontos }} pts</span>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="vazio">Nenhum jogador registrado ainda. Seja o primeiro!</div>
+    {% endif %}
+
+    <a href="/" class="btn-voltar">← Voltar ao início</a>
+</div>
+
+</body>
+</html>

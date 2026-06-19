@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado Final</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .resultado-card{ max-width:700px; position:relative; overflow:hidden; }
+        .trofeu{ font-size:90px; margin-bottom:15px; animation:pulse 2s infinite; }
+        .jogador{ display:inline-block; padding:10px 20px; background:#eefaf1; color:#009739; border-radius:30px; font-weight:700; margin-bottom:20px; }
+        .placar{ width:220px; height:220px; margin:20px auto; border-radius:50%; background:linear-gradient(135deg,#ffdf00,#ffd000); color:#002776; display:flex; flex-direction:column; justify-content:center; align-items:center; font-weight:bold; box-shadow:0 15px 35px rgba(255,223,0,.4), inset 0 5px 15px rgba(255,255,255,.5); }
+        .placar .pts{ font-size:60px; line-height:1; }
+        .placar .label{ font-size:18px; color:#002776; opacity:0.7; }
+        .porcentagem{ font-size:28px; font-weight:700; color:#002776; margin-bottom:25px; }
+        .mensagem{ padding:25px; border-radius:20px; margin:25px 0; }
+        .mensagem h2{ margin-bottom:10px; }
+        .ouro{ background:#fff7d1; border-left:6px solid #ffdf00; }
+        .prata{ background:#f1f4f8; border-left:6px solid #9aa6b2; }
+        .bronze{ background:#fff0e6; border-left:6px solid #cd7f32; }
+        .acoes{ margin-top:25px; }
+        .btn{ font-size:17px; font-weight:700; letter-spacing:.5px; }
+        .resultado-card::before{ content:""; position:absolute; top:-100px; right:-100px; width:220px; height:220px; border-radius:50%; background:rgba(255,223,0,.12); }
+        .resultado-card::after{ content:""; position:absolute; bottom:-100px; left:-100px; width:220px; height:220px; border-radius:50%; background:rgba(0,151,57,.12); }
+        @media(max-width:768px){ .placar{ width:170px; height:170px; } .placar .pts{ font-size:48px; } .trofeu{ font-size:70px; } }
+    </style>
+</head>
+<body>
+
+<div class="card resultado-card">
+
+    {% if acertos == 5 %}
+        <div class="trofeu">🏆</div>
+    {% elif acertos >= 3 %}
+        <div class="trofeu">🥈</div>
+    {% else %}
+        <div class="trofeu">⚽</div>
+    {% endif %}
+
+    <h1>Resultado Final</h1>
+
+    <div class="jogador">👤 {{ nome }}</div>
+
+    <div class="placar">
+        <span class="pts">{{ pontos }}</span>
+        <span class="label">pontos</span>
+    </div>
+
+    <div class="porcentagem">{{ (acertos * 20) }}% de acertos</div>
+
+    {% if acertos == 5 %}
+        <div class="mensagem ouro">
+            <h2>Campeão Mundial!</h2>
+            <p>Você acertou todas as perguntas e mostrou que domina a história das Copas do Mundo.</p>
+        </div>
+    {% elif acertos >= 3 %}
+        <div class="mensagem prata">
+            <h2>Ótimo Desempenho!</h2>
+            <p>Você conhece bastante sobre futebol e ficou perto da pontuação máxima.</p>
+        </div>
+    {% else %}
+        <div class="mensagem bronze">
+            <h2>Continue Treinando!</h2>
+            <p>Ainda há muitos títulos para conquistar. Tente novamente e melhore sua pontuação.</p>
+        </div>
+    {% endif %}
+
+    <div class="acoes">
+        <a href="/" class="btn">🔄 Jogar Novamente</a>
+        <a href="/ranking" class="btn" style="margin-top:10px; background:linear-gradient(135deg,#009739,#007a2e);">🏅 Ver Ranking</a>
+    </div>
+
+</div>
+
+</body>
+</html>
