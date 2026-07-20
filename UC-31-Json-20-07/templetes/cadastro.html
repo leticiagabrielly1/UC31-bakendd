@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Cadastro</title>
+</head>
+<body>
+
+<h1>Cadastro de Livros</h1>
+
+<form method="POST">
+
+<input type="text" name="titulo" placeholder="Título"><br><br>
+
+<input type="text" name="autor" placeholder="Autor"><br><br>
+
+<input type="text" name="ano" placeholder="Ano"><br><br>
+
+<input type="text" name="categoria" placeholder="Categoria"><br><br>
+
+<input type="number" name="quantidade" placeholder="Quantidade"><br><br>
+
+<button>Cadastrar Livro</button>
+
+</form>
+
+<p style="color:red">{{erro}}</p>
+
+<br>
+
+<a href="{{ url_for('livros') }}">Ver livros</a>
+
+|
+<a href="{{ url_for('buscar') }}">Buscar livro</a>
+
+</body>
+</html>
